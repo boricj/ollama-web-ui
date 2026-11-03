@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Web UI</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+</head>
+<body>
+    <div class="mobile-header">
+        <button id="menu-btn-toggle" class="button is-fullwidth menu-btn menu-btn-toggle" aria-label="Open menu" title="Open menu">
+            <span class="icon"><span>☰</span></span>
+            <span class="menu-label">Ollama Web UI</span>
+        </button>
+    </div>
+
+    <div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
+
+    <div class="app-shell">
+        <aside id="menu-panel" class="menu-panel">
+            <div class="menu-inner">
+                <div class="menu-header-row">
+                    <button id="menu-btn-header" class="button is-fullwidth menu-btn menu-btn-toggle menu-btn-header" aria-label="Toggle menu" title="Toggle menu">
+                        <span class="icon"><span>☰</span></span>
+                        <span class="menu-label">Ollama Web UI</span>
+                    </button>
+                </div>
+
+                <nav class="menu-nav" aria-label="Sidebar navigation">
+                    <button id="menu-btn-new-chat" class="button is-primary is-fullwidth menu-btn" title="New Chat" aria-label="New Chat">
+                        <span class="icon"><span>📄</span></span>
+                        <span class="action-label">New chat</span>
+                    </button>
+                    <button id="menu-btn-history" class="button is-light is-fullwidth menu-btn" title="History" aria-label="History">
+                        <span class="icon"><span>📖</span></span>
+                        <span class="action-label">History</span>
+                    </button>
+                    <button id="menu-btn-settings" class="button is-light is-fullwidth menu-btn" title="Settings" aria-label="Settings">
+                        <span class="icon"><span>⚙️</span></span>
+                        <span class="action-label">Settings</span>
+                    </button>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="content-pane">
+            <section id="chat-view" class="view">
+                <div class="view-shell">
+                    <div id="chat-history" class="chat-history box is-shadowless">
+                        <div class="chat-empty-state">
+                            <p>Start a new chat or select one from the history.</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area box is-shadowless">
+                        <div class="chat-composer">
+                            <textarea id="chat-prompt" class="textarea" placeholder="Type your message here..." rows="1"></textarea>
+
+                            <div class="chat-composer-actions">
+                                <div class="select chat-model-select">
+                                    <select id="chat-model-select">
+                                        <option value="">Loading models...</option>
+                                    </select>
+                                </div>
+
+                                <button id="chat-btn-send" class="button is-primary send-fab" type="button" aria-label="Send message" title="Send message" disabled>
+                                    <span aria-hidden="true">➤</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="history-view" class="view hidden">
+                <div class="view-shell">
+                    <div class="history-pane box is-shadowless">
+                        <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+                            <h1 class="title is-4 mb-0">History</h1>
+                            <button id="history-btn-delete-selected" class="button is-danger is-light is-small" type="button" disabled>Delete</button>
+                        </div>
+                        <div id="history-empty-state" class="history-empty-state">
+                            <p>No chats yet. Start a new chat to populate history.</p>
+                        </div>
+                        <ul id="history-list" class="menu-list history-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings-view" class="view hidden">
+                <div class="view-shell">
+                    <div class="settings-pane box is-shadowless">
+                        <h1 class="title is-4">Settings</h1>
+
+                        <div class="field settings-field">
+                            <label class="checkbox" for="settings-submit-shortcut">
+                                <input id="settings-submit-shortcut" type="checkbox">
+                                Use Ctrl+Enter to send
+                            </label>
+                            <p class="help">When enabled, Enter creates a new line in the composer and Ctrl+Enter submits the prompt.</p>
+                        </div>
+
+                        <div class="settings-actions mt-auto is-flex is-justify-content-flex-end">
+                            <button id="settings-btn-save" class="button is-primary">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/chat-session.js"></script>
+    <script src="js/pane-chat.js"></script>
+    <script src="js/pane-history.js"></script>
+    <script src="js/pane-settings.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

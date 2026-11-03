@@ -1,0 +1,8 @@
+http://localhost:8080 {
+	reverse_proxy /api/* https://ollama.com {
+		header_up Authorization "Bearer <OLLAMA_API_KEY>"
+	}
+
+	root * www/
+	file_server
+}
