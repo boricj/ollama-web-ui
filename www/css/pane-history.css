@@ -1,0 +1,90 @@
+/* --------------------------------------------------
+   History pane
+   -------------------------------------------------- */
+.history-pane {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-panel);
+    border-color: var(--border-soft);
+    color: var(--text-primary);
+}
+
+.history-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: 10rem;
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+}
+
+.history-list {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    overflow-y: auto;
+    background: var(--bg-panel);
+}
+
+.history-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    background: var(--bg-panel-alt);
+    border: 1px solid var(--border-soft);
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.history-entry-main {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.history-entry-checkbox {
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+}
+
+.history-entry-link {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+    color: var(--text-primary);
+}
+
+.history-entry-label {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.history-entry-rename {
+    flex-shrink: 0;
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--border-soft);
+}
+
+.history-empty {
+    display: none;
+}

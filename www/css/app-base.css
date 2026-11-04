@@ -1,0 +1,29 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    color-scheme: light dark;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg-app);
+    color: var(--text-primary);
+}
+
+button, select, textarea {
+    font: inherit;
+}
+
+button,
+.input,
+.textarea,
+.select select {
+    color: var(--text-primary);
+}
+
+.hidden {
+    display: none !important;
+}

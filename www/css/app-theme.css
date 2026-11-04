@@ -1,0 +1,44 @@
+/* --------------------------------------------------
+   General theme tokens
+   -------------------------------------------------- */
+:root {
+    color-scheme: light;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --bg-app: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-strong: #e2e8f0;
+    --bg-panel: #ffffff;
+    --bg-panel-alt: #f1f5f9;
+    --bg-input: #f8fafc;
+    --bg-accent: #2563eb;
+    --bg-accent-soft: rgba(37, 99, 235, 0.12);
+    --text-primary: #0f172a;
+    --text-muted: #475569;
+    --border-soft: rgba(148, 163, 184, 0.42);
+    --shadow-soft: rgba(15, 23, 42, 0.08);
+    --header-bg: #ffffff;
+    --header-border: rgba(148, 163, 184, 0.44);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --bg-app: #0f172a;
+        --bg-surface: #111827;
+        --bg-surface-strong: #1f2937;
+        --bg-panel: #111827;
+        --bg-panel-alt: #1f2937;
+        --bg-input: #0b1220;
+        --bg-accent: #2563eb;
+        --bg-accent-soft: rgba(37, 99, 235, 0.18);
+        --text-primary: #e5e7eb;
+        --text-muted: #9ca3af;
+        --border-soft: rgba(148, 163, 184, 0.2);
+        --shadow-soft: rgba(2, 6, 23, 0.38);
+        --header-bg: #111827;
+        --header-border: rgba(148, 163, 184, 0.2);
+    }
+}

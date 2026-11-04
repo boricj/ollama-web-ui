@@ -1,0 +1,22 @@
+/* --------------------------------------------------
+   Settings pane
+   -------------------------------------------------- */
+.settings-pane {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-panel);
+    border-color: var(--border-soft);
+    color: var(--text-primary);
+}
+
+.settings-actions {
+    padding-top: 0.75rem;
+}
+
+.settings-pane .help,
+.settings-pane label,
+.settings-pane .label {
+    color: var(--text-primary);
+}

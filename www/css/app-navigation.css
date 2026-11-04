@@ -1,0 +1,72 @@
+/* --------------------------------------------------
+   Menu / navigation
+   -------------------------------------------------- */
+.mobile-header {
+    display: none;
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: rgba(15, 23, 42, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.menu-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-panel {
+    width: 16.75rem;
+    flex-shrink: 0;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border-soft);
+    z-index: 30;
+    transition: width 0.2s ease, transform 0.2s ease;
+}
+
+.menu-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.75rem;
+}
+
+.menu-header-row {
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 0.65rem;
+    margin-bottom: 0.65rem;
+}
+
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    gap: 0.45rem;
+}
+
+.menu-btn {
+    justify-content: flex-start;
+    background: var(--bg-panel-alt);
+    border-color: var(--border-soft);
+    color: var(--text-primary);
+}
+
+.menu-btn .icon {
+    margin-right: 0.45rem;
+}
+
+#menu-btn-settings {
+    margin-top: auto;
+}
+
+.menu-btn.is-active {
+    background: var(--bg-accent-soft);
+    border-color: var(--bg-accent);
+    color: var(--text-primary);
+}
