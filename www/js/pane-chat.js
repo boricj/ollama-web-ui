@@ -18,6 +18,50 @@
     function clearChatMessages() {
         const app = getApp();
         app.elements.chatHistory.querySelectorAll('.chat-message').forEach((node) => node.remove());
+        lastScrollHeight = 0;
+        autoScrollEnabled = true;
+    }
+
+    let lastScrollHeight = 0;
+    let wasAtBottomBeforeSend = false;
+    let autoScrollEnabled = true;
+
+    function isNearBottom() {
+        const app = getApp();
+        const chatHistory = app.elements.chatHistory;
+        const distanceFromBottom = chatHistory.scrollHeight - (chatHistory.scrollTop + chatHistory.clientHeight);
+        return distanceFromBottom <= 4;
+    }
+
+    function shouldAutoScroll() {
+        const app = getApp();
+        const chatHistory = app.elements.chatHistory;
+        const heightChanged = chatHistory.scrollHeight !== lastScrollHeight;
+        if (!heightChanged || !autoScrollEnabled) {
+            return false;
+        }
+
+        lastScrollHeight = chatHistory.scrollHeight;
+
+        if (wasAtBottomBeforeSend) {
+            wasAtBottomBeforeSend = false;
+            autoScrollEnabled = true;
+            return true;
+        }
+
+        return true;
+    }
+
+    function scrollChatIfNeeded() {
+        const app = getApp();
+        if (shouldAutoScroll()) {
+            app.elements.chatHistory.scrollTop = app.elements.chatHistory.scrollHeight;
+        }
+    }
+
+    function markAtBottomBeforeSend() {
+        wasAtBottomBeforeSend = isNearBottom();
+        autoScrollEnabled = wasAtBottomBeforeSend;
     }
 
     async function saveCurrentChat() {
@@ -59,7 +103,7 @@
         }
 
         app.elements.chatHistory.appendChild(div);
-        if (shouldScroll) {
+        if (shouldScroll && shouldAutoScroll()) {
             app.elements.chatHistory.scrollTop = app.elements.chatHistory.scrollHeight;
         }
     }
@@ -99,7 +143,7 @@
         wrapper.className = 'chat-message assistant chat-response-loading';
         wrapper.innerHTML = '<div class="chat-response-loading-content"><span class="chat-response-spinner" aria-hidden="true"></span><span>Thinking...</span></div>';
         app.elements.chatHistory.appendChild(wrapper);
-        app.elements.chatHistory.scrollTop = app.elements.chatHistory.scrollHeight;
+        scrollChatIfNeeded();
     }
 
     function updateStreamingUI(chat) {
@@ -121,7 +165,7 @@
             app.elements.chatHistory.appendChild(div);
         }
 
-        app.elements.chatHistory.scrollTop = app.elements.chatHistory.scrollHeight;
+        scrollChatIfNeeded();
     }
 
     function parseOllamaStreamChunk(chat, chunkText) {
@@ -217,6 +261,9 @@
         app.elements.userPrompt.value = '';
         app.elements.userPrompt.style.height = 'auto';
         setSendButtonLoading(true);
+
+        // Remember if we're at the bottom before adding the user message
+        markAtBottomBeforeSend();
 
         if (app.state.currentChatId === null) {
             const chatId = Date.now().toString();
@@ -336,6 +383,10 @@
             this.style.height = 'auto';
             this.style.height = `${this.scrollHeight}px`;
             app.updateSendButtonState();
+        });
+
+        app.elements.chatHistory.addEventListener('scroll', () => {
+            autoScrollEnabled = isNearBottom();
         });
 
         app.elements.modelSelect.addEventListener('change', () => app.updateSendButtonState());
