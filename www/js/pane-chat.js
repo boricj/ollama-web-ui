@@ -238,6 +238,7 @@
                 throw new Error('No models found');
             }
 
+            data.models.sort((a, b) => a.name.localeCompare(b.name));
             data.models.forEach((model) => {
                 const opt = document.createElement('option');
                 opt.value = model.name;
