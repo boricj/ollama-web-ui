@@ -52,7 +52,7 @@
         const div = document.createElement('div');
         div.className = `chat-message ${role}`;
 
-        if (role === 'assistant') {
+        if (role === 'assistant' || role === 'user') {
             div.innerHTML = DOMPurify.sanitize(marked.parse(text));
         } else {
             div.textContent = text;
