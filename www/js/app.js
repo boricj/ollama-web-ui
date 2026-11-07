@@ -231,3 +231,49 @@
 
     init();
 })();
+
+function collectAppAssets() {
+    const assets = new Set();
+
+    document.querySelectorAll('link[href], script[src]').forEach((element) => {
+        const src = element.getAttribute('href') || element.getAttribute('src');
+        if (!src) return;
+
+        const url = new URL(src, window.location.href);
+        assets.add(url.origin === window.location.origin ? `${url.pathname}${url.search}` : url.href);
+    });
+
+    assets.add('/');
+    assets.add('/index.html');
+    return [...assets];
+}
+
+async function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) return;
+
+    try {
+        const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        const assets = collectAppAssets();
+
+        const sendAssets = () => {
+            const controller = navigator.serviceWorker.controller || registration.active;
+            if (controller) {
+                controller.postMessage({ type: 'SET_ASSETS', assets });
+            }
+        };
+
+        if (navigator.serviceWorker.controller) {
+            sendAssets();
+        } else {
+            navigator.serviceWorker.addEventListener('controllerchange', sendAssets, { once: true });
+        }
+
+        console.log('SW registered: ', registration);
+    } catch (error) {
+        console.log('SW registration failed: ', error);
+    }
+}
+
+window.addEventListener('load', () => {
+    registerServiceWorker();
+});

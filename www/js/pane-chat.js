@@ -248,8 +248,7 @@
 
             app.updateSendButtonState();
         } catch (error) {
-            app.elements.modelSelect.innerHTML = '<option value="">Loading models...</option>';
-            setTimeout(loadModels, 5000);
+            app.elements.modelSelect.innerHTML = '<option value="">Backend unavailable</option>';
         }
     }
 
